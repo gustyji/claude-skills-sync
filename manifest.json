@@ -1,8 +1,26 @@
 {
-  "version": 2,
+  "version": 3,
   "description": "GusMini's Claude Code skills registry",
   "skills": [
+    {"name": "9pin-argentina", "repo": "gustyji/claude-skill-9pin-argentina"},
+    {"name": "9pin-server-status", "repo": "gustyji/claude-skill-9pin-server-status"},
+    {"name": "9pin-web+erp", "repo": "gustyji/claude-skill-9pin-web-erp"},
+    {"name": "auth-wechat-miniprogram", "repo": "gustyji/claude-skill-auth-wechat-miniprogram"},
+    {"name": "auto-weixin-video", "repo": "gustyji/claude-skill-auto-weixin-video"},
+    {"name": "find-skills", "repo": "gustyji/claude-skill-find-skills"},
+    {"name": "frontend-design", "repo": "gustyji/claude-skill-frontend-design"},
+    {"name": "goal", "repo": "gustyji/claude-goal"},
     {"name": "humanizer-zh", "repo": "op7418/Humanizer-zh"},
-    {"name": "wechat-claude-code", "repo": "Wechat-ggGitHub/wechat-claude-code"}
+    {"name": "memory-sync", "repo": "gustyji/claude-skill-memory-sync"},
+    {"name": "wechat-article-extractor", "repo": "gustyji/claude-skill-wechat-article-extractor"},
+    {"name": "wechat-claude-code", "repo": "Wechat-ggGitHub/wechat-claude-code"},
+    {"name": "wechat-h5", "repo": "gustyji/claude-skill-wechat-h5"},
+    {"name": "wechat-miniapp", "repo": "gustyji/claude-skill-wechat-miniapp"},
+    {"name": "wechat-pay", "repo": "gustyji/claude-skill-wechat-pay"},
+    {"name": "wechat-work", "repo": "gustyji/claude-skill-wechat-work"},
+    {"name": "weixin-agent-sdk", "repo": "gustyji/claude-skill-weixin-agent-sdk"}
+  ],
+  "post_install": [
+    {"type": "symlink", "source": "~/.claude/skills/goal/goals", "target": "~/.claude/goals"}
   ]
 }
