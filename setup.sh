@@ -1,21 +1,27 @@
 #!/bin/bash
 # Claude Code 技能一键安装/同步脚本
-# 用法: curl -fsSL https://raw.githubusercontent.com/gustyji/claude-skills-sync/main/setup.sh | bash
+# 前提: 新设备需先运行 gh auth login
+# 用法: gh repo clone gustyji/claude-skills-sync /tmp/claude-skills-sync && bash /tmp/claude-skills-sync/setup.sh
 set -euo pipefail
 
 SKILL_DIR="$HOME/.claude/skills"
-MANIFEST_URL="https://raw.githubusercontent.com/gustyji/claude-skills-sync/main/manifest.json"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+MANIFEST="$SCRIPT_DIR/manifest.json"
 
 echo "=== Claude Code 技能同步 ==="
+
+# 检查 gh 是否已登录
+if ! gh auth status &>/dev/null; then
+  echo "错误: 请先运行 gh auth login 登录 GitHub"
+  exit 1
+fi
+
 mkdir -p "$SKILL_DIR"
 
-# 下载 manifest
-MANIFEST=$(curl -fsSL "$MANIFEST_URL")
-
 # 解析技能列表
-SKILLS=$(echo "$MANIFEST" | python3 -c "
-import json, sys
-m = json.load(sys.stdin)
+SKILLS=$(python3 -c "
+import json
+m = json.load(open('$MANIFEST'))
 for s in m['skills']:
     print(s['name'] + '|' + s['repo'])
 ")
@@ -37,7 +43,7 @@ while IFS='|' read -r name repo; do
     fi
   else
     printf "  [%s] 安装..." "$name"
-    if git clone -q "https://github.com/$repo.git" "$dest" 2>/dev/null; then
+    if gh repo clone "$repo" "$dest" -- -q 2>/dev/null; then
       echo " OK"
       OK=$((OK + 1))
     else
